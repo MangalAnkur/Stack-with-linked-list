@@ -1,0 +1,93 @@
+# Stack-with-linked-list
+Implementation of stack with Linked list
+#include<stdio.h>
+struct node
+{
+    int info;
+    struct node * next;
+};
+
+struct node* createnode();
+void push(struct node **s,int item);
+int pop(struct node **s);
+int peek(struct node **S);
+void removestack(struct node **s);
+
+struct node* createnode()
+{
+ struct node *n;
+ n=(struct node*)malloc(sizeof(struct node *));
+ return n;
+}
+
+void push(struct node **s,int item)
+{
+    struct node *n;
+    n=createnode();
+    if(n!=NULL)
+    {
+    n->info=item;
+    n->next=*s;
+    *s=n;
+    }
+}
+int pop(struct node **s)
+{
+    struct node *r;
+    int item;
+    if(*s==NULL)
+    {
+        printf("\n Stack is underflow");
+        return ;
+    }
+    else
+    {
+        r=(*s);
+        item=(*s)->info;
+        (*s)=r->next;
+        free (r);
+        return item;
+    }
+}
+int peek(struct node **s)
+{
+    if(*s==NULL)
+    {
+        printf("\n Stack is underflow");
+        return ;
+    }
+    else
+    {
+        return ((*s)->info);
+    }
+}
+void removestack(struct node **s)
+{
+    while(*s!=NULL)
+        pop(s);
+}
+main()
+{
+    struct node *start;
+    int n,item,i;
+    printf("\n Insert the number of values u want to insert in list");
+    printf("\n");
+    scanf("%d",&n);
+    if(n<=0)
+    {
+        printf("Wrong number");
+    }
+    else
+    {
+     for(i=1;i<=n;i++)
+     {
+       printf("\n Enter value %d",i);
+       printf("\n");
+       scanf("%d",&item);
+       push(&start,item);
+     }
+     printf("\n last inserted element is %d", peek(&start));
+     printf("\n last deleted element is %d", pop(&start));
+     printf("\n last inserted element is %d", peek(&start));
+    }
+}
